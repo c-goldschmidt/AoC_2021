@@ -30,6 +30,9 @@ class Grid:
                 line += self.cell_to_string(x, y)
             print(line)
 
+    def in_bounds(self, p):
+        return self.min_x <= p.x <= self.max_x and self.min_y <= p.y <= self.max_y
+
     def cell_to_string(self, x, y):
         return f'{self[(x, y)]}'
 

@@ -3,10 +3,6 @@ from utils.grid import Grid
 
 
 class DepthGrid(Grid):
-
-    def in_bounds(self, p):
-        return self.min_x <= p.x <= self.max_x and self.min_y <= p.y <= self.max_y
-
     def is_low_point(self, point):
         at_point = self[point]
         for p in point.neighbors():
