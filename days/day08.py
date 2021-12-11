@@ -19,27 +19,6 @@ class Day08(Day):
 
         return count
 
-    def _solve_for_segments(self, numbers, options_by_letter, output):
-        found = {}
-        used = set()
-        interchangeable = set()
-
-        for i in range(7):
-            for key, value in options_by_letter.items():
-                options_by_letter[key] = value - used
-
-            clone = {**options_by_letter}
-
-            for key, value in clone.items():
-                possible = list(value - used)
-                if len(possible) == 1:
-                    used.add(possible[0])
-                    found[key] = possible[0]
-
-            print(used, clone)
-
-        print(found, clone, interchangeable)
-
     def _solve_overlaps(self, unknowns, seen_numbers):
         # probably way too complex...
         overlaps = {
@@ -60,7 +39,7 @@ class Day08(Day):
             possible = set(overlaps.keys()) - set(seen_numbers.keys())
 
             can_be = False
-            for key in list(possible):
+            for key in possible:
                 if len(item) != overlaps[8][key]:
                     # 8 has all segments lit, so its overlap indicates the required number of segments
                     continue
@@ -92,19 +71,16 @@ class Day08(Day):
     def solve_line(self, config, output):
         numbers_by_len = {2: 1, 3: 7, 4: 4, 7: 8}
         seen_numbers = {}
-        checked = set()
         unknowns = set()
 
         for item in config:
             known = numbers_by_len.get(len(item))
             if known:
                 seen_numbers[known] = set(item)
-                checked.add(item)
             else:
                 unknowns.add(item)
 
         self._solve_overlaps(unknowns, seen_numbers)
-
         return self._get_output(seen_numbers, output)
 
     def part2(self):
