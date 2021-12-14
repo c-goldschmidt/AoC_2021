@@ -23,12 +23,18 @@ class Grid:
         new_grid.max_y = self.max_y
         return new_grid
 
-    def print(self):
+    def to_string(self):
+        result = ''
         for y in self.iter_y():
             line = ''
             for x in self.iter_x():
                 line += self.cell_to_string(x, y)
-            print(line)
+
+            result += f'{line}\n'
+        return result
+
+    def print(self):
+        print(self.to_string())
 
     def in_bounds(self, p):
         return self.min_x <= p.x <= self.max_x and self.min_y <= p.y <= self.max_y
