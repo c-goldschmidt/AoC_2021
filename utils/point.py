@@ -21,6 +21,9 @@ class Point:
     def eq(self, other):
         return self.x == other.x and self.y == other.y
 
+    def __gt__(self, other):
+        return self.x - other.x + self.y - other.y > 0
+
     def __repr__(self):
         name = f'({self.name})' if self.name else ''
         return f'{self.__class__.__name__}[{self.x},{self.y}]{name}'
