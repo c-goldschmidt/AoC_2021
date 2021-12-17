@@ -14,8 +14,11 @@ class Grid:
         self.min_x = None
         self.min_y = None
 
+    def _clone_instance(self):
+        return self.__class__()
+
     def clone(self):
-        new_grid = self.__class__()
+        new_grid = self._clone_instance()
         new_grid.grid = copy.deepcopy(self.grid)
         new_grid.min_x = self.min_x
         new_grid.min_y = self.min_y
