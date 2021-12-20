@@ -6,6 +6,7 @@ from utils.point import Point, UniquePoint
 
 class Grid:
     fallback = '.'
+    fixed_bounds = False
 
     def __init__(self):
         self.grid = defaultdict(dict)
@@ -24,6 +25,7 @@ class Grid:
         new_grid.min_y = self.min_y
         new_grid.max_x = self.max_x
         new_grid.max_y = self.max_y
+        new_grid.fixed_bounds = self.fixed_bounds
         return new_grid
 
     def to_string(self):
@@ -47,7 +49,9 @@ class Grid:
 
     def set(self, x, y, item):
         self.grid[y][x] = item
-        self.update_bounds(x, y)
+
+        if not self.fixed_bounds:
+            self.update_bounds(x, y)
 
     def get(self, x, y):
         return self.grid[y].get(x, self.fallback)

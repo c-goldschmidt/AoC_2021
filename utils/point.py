@@ -19,7 +19,12 @@ class Point:
         return abs(self.x - other.x) + abs(self.y - other.y)
 
     def eq(self, other):
-        return self.x == other.x and self.y == other.y
+        if isinstance(other, Point):
+            x, y = other.x, other.y
+        else:
+            x, y = other
+
+        return self.x == x and self.y == y
 
     def __gt__(self, other):
         return self.x - other.x + self.y - other.y > 0
