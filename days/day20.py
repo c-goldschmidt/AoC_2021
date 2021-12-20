@@ -1,17 +1,16 @@
-from functools import lru_cache
-
 from day import Day
 from utils.grid import Grid
-from utils.timer import Timer
 
 
 class PixelGrid(Grid):
     enhance = None
     fallback = 0
+    neighbor_cache = {}
 
     def clone(self):
         grid = super().clone()
         grid.enhance = self.enhance
+        grid.neighbor_cache = self.neighbor_cache
         return grid
 
     def cell_to_string(self, x, y):
@@ -39,7 +38,11 @@ class PixelGrid(Grid):
         return sum(self.iter_values())
 
     def _next(self, point):
-        return sorted([*point.neighbors(True), point], key=lambda p: (p.y, p.x))
+        neighbors = self.neighbor_cache.get(point)
+        if not neighbors:
+            neighbors = sorted([*point.neighbors(True), point], key=lambda p: (p.y, p.x))
+            self.neighbor_cache[point] = neighbors
+        return neighbors
 
 
 class Day20(Day):
@@ -66,5 +69,4 @@ class Day20(Day):
         return self._enhance(2).value()
 
     def part2(self):
-        # takes 30sec ...sorry again...
         return self._enhance(50).value()

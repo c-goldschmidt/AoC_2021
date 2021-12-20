@@ -66,7 +66,7 @@ class Point:
 class UniquePoint(Point):
     def __init__(self, x, y, name=None):
         super().__init__(x, y)
-        self.hash = hash((self.x, self.y, name))
+        self.hash = hash((f'{self.x},{self.y}', name))
 
     def __eq__(self, other):
         return self.hash == other.hash
